@@ -1,0 +1,30 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t smoters/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true smoters/react-test npm run test
+
+after_success:
+  - docker build -t smoters/multi-client ./client
+  - docker build -t smoters/multi-nginx ./nginx
+  - docker build -t smoters/multi-server ./server
+  - docker build -t smoters/multi-worker ./worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "frontend"
+  env: "frontend-env"
+  bucket_name: "elasticbeanstalk-us-east-1-830637537339"
+  bucket_path: "frontend"
+  on: 
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  
+    
+
