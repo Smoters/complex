@@ -21,4 +21,17 @@ after_success:
   - docker push smoters/multi-server
   - docker push smoters/multi-worker
     
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: multi-docker
+  env: Multi-docker-env
+  bucket_name: elasticbeanstalk-us-east-1-830637537339
+  bucket_path: multi-docker
+  on: 
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+  
 
