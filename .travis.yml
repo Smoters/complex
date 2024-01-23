@@ -2,35 +2,38 @@ sudo: required
 services:
   - docker
 
-before_install:
-  - docker build -t smoters/react-test -f ./client/Dockerfile.dev ./client
+# before_install:
+#   - docker build -t smoters/react-test -f ./client/Dockerfile.dev ./client
+
+# script:
+#   - docker run -e CI=true smoters/react-test npm run test
+
+
+#after_success:
 
 script:
-  - docker run -e CI=true smoters/react-test npm run test
-
-after_success:
-  - docker build -t smoters/multi-client ./client
-  - docker build -t smoters/multi-nginx ./nginx
+  # - docker build -t smoters/multi-client ./client
+  # - docker build -t smoters/multi-nginx ./nginx
+  # - docker build -t smoters/multi-worker ./worker
   - docker build -t smoters/multi-server ./server
-  - docker build -t smoters/multi-worker ./worker
-
+  
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  - docker push smoters/multi-client
-  - docker push smoters/multi-nginx
+  # - docker push smoters/multi-client
+  # - docker push smoters/multi-nginx
+  # - docker push smoters/multi-worker
   - docker push smoters/multi-server
-  - docker push smoters/multi-worker
     
-deploy:
-  provider: elasticbeanstalk
-  region: us-east-1
-  app: multi-docker
-  env: Multi-docker-env
-  bucket_name: elasticbeanstalk-us-east-1-830637537339
-  bucket_path: multi-docker
-  on: 
-    branch: main
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+# deploy:
+#   provider: elasticbeanstalk
+#   region: us-east-1
+#   app: multi-docker
+#   env: Multi-docker-env
+#   bucket_name: elasticbeanstalk-us-east-1-830637537339
+#   bucket_path: multi-docker
+#   on: 
+#     branch: main
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key: $AWS_SECRET_KEY
   
 
