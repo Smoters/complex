@@ -15,11 +15,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: smoters/multi-server
+      # - name: Extract metadata (tags, labels) for Docker
+      #   id: meta
+      #   uses: docker/metadata-action@v5
+      #   with:
+      #     images: smoters/multi-server
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -27,8 +27,9 @@ jobs:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: smoters/multi-server
+#          tags: ${{ steps.meta.outputs.labels }}
+#          labels: ${{ steps.meta.outputs.labels }}
 
 
 # jobs:
