@@ -19,7 +19,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: smoters/multi-server:latest
+          images: smoters/multi-server
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
