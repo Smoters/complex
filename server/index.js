@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 app.get('/values/all', async (req, res) => {
     console.log('/values/all server request received to retrieve all from values table in postgres');
     const values = await pgClient.query('SELECT * FROM values ORDER BY number');
-    console.log('/values/all server request returned: ' + values.map(({ number }) => number).join(', '));
+    console.log('/values/all server request returned: ' + values.rows.map(({ number }) => number).join(', '));
     res.send(values.rows);
 });
 
