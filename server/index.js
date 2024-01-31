@@ -53,7 +53,7 @@ app.get('/values/all', async (req, res) => {
 app.get('/values/current', async (req, res) => {
     console.log('/values/current server request received to retrieve all hashed values from redis');
     redisClient.hgetall('values', (err, values) => {
-        console.log('/values/current server request returned: ' + values.data);
+        console.log('/values/current server request returned: ');
         console.log('---');
         for (let key in values) {
             console.log(' [' + key + '] : ' + values[key]);
